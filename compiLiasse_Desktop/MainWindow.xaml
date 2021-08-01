@@ -6,11 +6,12 @@
         xmlns:local="clr-namespace:compiLiasse_Desktop"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <TextBlock x:Name="TxBoMessage" HorizontalAlignment="Center" Margin="0,83,0,0" Text="Select a message option and click display" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <RadioButton x:Name="RdBtHello" Content="Hello" HorizontalAlignment="Left" Margin="269,163,0,0" VerticalAlignment="Top" IsChecked="True"/>
-        <RadioButton x:Name="RdBtGoodBye" Content="Goodbye" HorizontalAlignment="Left" Margin="465,163,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="BtnDisplay" Content="Display" HorizontalAlignment="Center" Margin="0,217,0,0" VerticalAlignment="Top" Click="BtnDisplay_Click"/>
+    <Grid x:Name="GrdPrincipal">
+        <WebBrowser Margin="45,110,290,44" Source="C:\"/>
+        <TextBlock x:Name="TxBoMessage" HorizontalAlignment="Left" Margin="23,13,0,0" Text="Select a message option and click display" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <RadioButton x:Name="RdBtHello" Content="Hello" HorizontalAlignment="Left" Margin="452,21,0,0" VerticalAlignment="Top" IsChecked="True"/>
+        <Button x:Name="BtnDisplay" Content="Display" HorizontalAlignment="Left" Margin="708,14,0,0" VerticalAlignment="Top" Click="BtnDisplay_Click"/>
+        <RadioButton x:Name="RdBtGoodBye" Content="Goodbye" Margin="541,22,192,397"/>
 
     </Grid>
 </Window>
