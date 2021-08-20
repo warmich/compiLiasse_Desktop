@@ -25,15 +25,22 @@ namespace compiLiasse_Desktop
 			InitializeComponent();
 		}
 
-		private void BtnDisplay_Click(object sender, RoutedEventArgs e)
+		private void ButtonAddName_Click(object sender, RoutedEventArgs e)
 		{
-			if (RdBtHello.IsChecked == true)
+
+		}
+
+		private void Add2_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void BtnAjouterNom_Click(object sender, RoutedEventArgs e)
+		{
+			if (!string.IsNullOrWhiteSpace(txtName.Text) && !lstNames.Items.Contains(txtName.Text))
 			{
-				MessageBox.Show("Hello.");
-			}
-			else if (RdBtGoodBye.IsChecked == true)
-			{
-				MessageBox.Show("Goodbye.");
+				lstNames.Items.Add(txtName.Text);
+				txtName.Clear();
 			}
 		}
 	}
