@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:compiLiasse_Desktop"
         mc:Ignorable="d"
-        Title="compiLiasse_desktop" Height="450" Width="800">
+        Title="compiLiasse_desktop" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid x:Name="GrdPrincipal" Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -22,5 +22,6 @@
             <TextBox x:Name="txtName" />
             <Button x:Name="BtnAjouterNom" Content="Ajouter Nom" Click="BtnAjouterNom_Click"/>
         </StackPanel>
+        <Canvas/>
     </Grid>
 </Window>

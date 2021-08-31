@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace compiLiasse_Desktop
 {
@@ -25,16 +12,6 @@ namespace compiLiasse_Desktop
 			InitializeComponent();
 		}
 
-		private void ButtonAddName_Click(object sender, RoutedEventArgs e)
-		{
-
-		}
-
-		private void Add2_Click(object sender, RoutedEventArgs e)
-		{
-
-		}
-
 		private void BtnAjouterNom_Click(object sender, RoutedEventArgs e)
 		{
 			if (!string.IsNullOrWhiteSpace(txtName.Text) && !lstNames.Items.Contains(txtName.Text))
@@ -42,6 +19,11 @@ namespace compiLiasse_Desktop
 				lstNames.Items.Add(txtName.Text);
 				txtName.Clear();
 			}
+		}
+
+		private void Window_Loaded(object sender, RoutedEventArgs e)
+		{
+			compiLiasse_Console.Program.StartingMethode();
 		}
 	}
 }

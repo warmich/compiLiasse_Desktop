@@ -6,4 +6,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\compiLiasse_Console\compiLiasse_Console\compiLiasse_Console.csproj" />
+  </ItemGroup>
+
 </Project>
