@@ -17,7 +17,36 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Label Grid.Column="0" Content="compiLiasse_desktop"/>
-        <ListBox Grid.Row="1" x:Name="lstNames" />
+        <!--<ListBox Grid.Row="1" x:Name="lstNames" MouseDoubleClick="lstNames_MouseDoubleClick" />-->
+        <ListView x:Name="lstNames" Margin="0,0,0,0" Grid.Row="1" MouseDoubleClick="lstNames_MouseDoubleClick">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Id" Width="20" DisplayMemberBinding="{Binding Id}" />
+                    <GridViewColumn Header="Chemin" Width="250" DisplayMemberBinding="{Binding FilePath}" />
+                    <GridViewColumn Header="Fichier" Width="90">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding FileName}" FontWeight="Bold" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+					</GridViewColumn>
+                </GridView>
+            </ListView.View>
+            <!--<ListView.ItemTemplate>
+				<DataTemplate>
+					<WrapPanel>
+						<TextBlock Text="Fichier: " />
+						<TextBlock Text=" (" />
+						<TextBlock Text="{Binding Id}" FontWeight="Bold" />
+                        <TextBlock Text=") " />
+                        <TextBlock Text="Chemin: " />
+						<TextBlock Text="{Binding FilePath}" FontWeight="Normal" />
+                        <TextBlock Text="\" />
+						<TextBlock Text="{Binding FileName}" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" />
+					</WrapPanel>
+				</DataTemplate>
+			</ListView.ItemTemplate>-->
+        </ListView>
         <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
             <TextBox x:Name="txtName" />
             <Button x:Name="BtnAjouterNom" Content="Ajouter Nom" Click="BtnAjouterNom_Click"/>

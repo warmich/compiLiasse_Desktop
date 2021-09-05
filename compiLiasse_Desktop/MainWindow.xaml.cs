@@ -1,11 +1,11 @@
-﻿using compiLiasse_Console;
-
+﻿
 using Newtonsoft.Json;
 
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
+using System.Windows.Input;
 
 namespace compiLiasse_Desktop
 {
@@ -17,25 +17,6 @@ namespace compiLiasse_Desktop
 		public MainWindow()
 		{
 			InitializeComponent();
-		}
-
-		private void BtnAjouterNom_Click(object sender, RoutedEventArgs e)
-		{
-			if (!string.IsNullOrWhiteSpace(txtName.Text) && !lstNames.Items.Contains(txtName.Text))
-			{
-				lstNames.Items.Add(txtName.Text);
-				txtName.Clear();
-			}
-		}
-
-		private void Window_Loaded(object sender, RoutedEventArgs e)
-		{
-			Program.StartingMethode();
-			List<FilePdf> listFilesFromJson_Wpf = GetFilesFromJson(Utilities.parametersPathFile);
-			foreach (var item in listFilesFromJson_Wpf)
-			{
-				lstNames.Items.Add(item.ToString());
-			}
 		}
 
 		internal static List<FilePdf> GetFilesFromJson(string pFileName)
@@ -65,5 +46,30 @@ namespace compiLiasse_Desktop
 			return listFilesPdf;
 		}
 
+		private void BtnAjouterNom_Click(object sender, RoutedEventArgs e)
+		{
+			if (!string.IsNullOrWhiteSpace(txtName.Text) && !lstNames.Items.Contains(txtName.Text))
+			{
+				lstNames.Items.Add(txtName.Text);
+				txtName.Clear();
+			}
+		}
+
+		private void lstNames_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+		{
+			var b = lstNames.SelectedItem as FilePdf;
+			//MessageBox.Show(b.ToString());
+			DetailFileWindow detailFileWindow = new();
+			detailFileWindow.FilePdfTxtBox.Text = b.FileName;
+			detailFileWindow.ShowDialog();
+		}
+
+		private void Window_Loaded(object sender, RoutedEventArgs e)
+		{
+			Program.StartingMethode();
+			List<FilePdf> listFilesFromJson_Wpf = GetFilesFromJson(Utilities.parametersPathFile);
+			lstNames.ItemsSource = listFilesFromJson_Wpf;
+			//lstNames.DataContext = listFilesFromJson_Wpf;
+		}
 	}
 }
