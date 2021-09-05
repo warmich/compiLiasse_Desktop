@@ -1,56 +1,47 @@
 ﻿<Window x:Class="compiLiasse_Desktop.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:compiLiasse_Desktop"
         mc:Ignorable="d"
         Title="compiLiasse_desktop" Height="450" Width="800" Loaded="Window_Loaded">
-    <Grid x:Name="GrdPrincipal" Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+	
+	<!--Mise en page => Grid-->
+	<Grid x:Name="GrdPrincipal" Margin="10">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Label Grid.Column="0" Content="compiLiasse_desktop"/>
-        <!--<ListBox Grid.Row="1" x:Name="lstNames" MouseDoubleClick="lstNames_MouseDoubleClick" />-->
-        <ListView x:Name="lstNames" Margin="0,0,0,0" Grid.Row="1" MouseDoubleClick="lstNames_MouseDoubleClick">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Id" Width="20" DisplayMemberBinding="{Binding Id}" />
-                    <GridViewColumn Header="Chemin" Width="250" DisplayMemberBinding="{Binding FilePath}" />
-                    <GridViewColumn Header="Fichier" Width="90">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding FileName}" FontWeight="Bold" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition />
+			<ColumnDefinition />
+		</Grid.ColumnDefinitions>
+
+		<!--Contenu de la colonne de gauche-->
+		<Label Grid.Column="0" Content="compiLiasse_desktop"/>
+		<ListView x:Name="lstNames" Margin="0,0,0,0" Grid.Row="1" MouseDoubleClick="lstNames_MouseDoubleClick">
+			<ListView.View>
+				<GridView>
+					<GridViewColumn Header="Id" Width="20" DisplayMemberBinding="{Binding Id}" />
+					<GridViewColumn Header="Chemin" Width="250" DisplayMemberBinding="{Binding FilePath}" />
+					<GridViewColumn Header="Fichier" Width="90">
+						<GridViewColumn.CellTemplate>
+							<DataTemplate>
+								<TextBlock Text="{Binding FileName}" FontWeight="Bold" />
+							</DataTemplate>
+						</GridViewColumn.CellTemplate>
 					</GridViewColumn>
-                </GridView>
-            </ListView.View>
-            <!--<ListView.ItemTemplate>
-				<DataTemplate>
-					<WrapPanel>
-						<TextBlock Text="Fichier: " />
-						<TextBlock Text=" (" />
-						<TextBlock Text="{Binding Id}" FontWeight="Bold" />
-                        <TextBlock Text=") " />
-                        <TextBlock Text="Chemin: " />
-						<TextBlock Text="{Binding FilePath}" FontWeight="Normal" />
-                        <TextBlock Text="\" />
-						<TextBlock Text="{Binding FileName}" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" />
-					</WrapPanel>
-				</DataTemplate>
-			</ListView.ItemTemplate>-->
-        </ListView>
-        <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
-            <TextBox x:Name="txtName" />
-            <Button x:Name="BtnAjouterNom" Content="Ajouter Nom" Click="BtnAjouterNom_Click"/>
-        </StackPanel>
-        <Canvas/>
-    </Grid>
+				</GridView>
+			</ListView.View>
+		</ListView>
+		
+		<!--Contenu de la colonne de droite-->
+		<StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
+			<Button x:Name="btnAddFile" Click="btnAddFile_Click" Content="Ajouter"/>
+			<Button x:Name="btnChangeFile" Click="btnChangeFile_Click" Margin="0,5" Content="Modifier"/>
+			<Button x:Name="btnDeleteFile" Click="btnDeleteFile_Click" Content="Supprimer"/>
+		</StackPanel>
+		<Canvas/>
+	</Grid>
 </Window>

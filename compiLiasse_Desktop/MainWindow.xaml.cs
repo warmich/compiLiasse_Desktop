@@ -1,11 +1,13 @@
-﻿
-using Newtonsoft.Json;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
+
+using Newtonsoft.Json;
 
 namespace compiLiasse_Desktop
 {
@@ -14,6 +16,8 @@ namespace compiLiasse_Desktop
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		public ObservableCollection<FilePdf> ObsCollectionFilesFromJson_Wpf { get; set; }
+
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -46,15 +50,6 @@ namespace compiLiasse_Desktop
 			return listFilesPdf;
 		}
 
-		private void BtnAjouterNom_Click(object sender, RoutedEventArgs e)
-		{
-			if (!string.IsNullOrWhiteSpace(txtName.Text) && !lstNames.Items.Contains(txtName.Text))
-			{
-				lstNames.Items.Add(txtName.Text);
-				txtName.Clear();
-			}
-		}
-
 		private void lstNames_MouseDoubleClick(object sender, MouseButtonEventArgs e)
 		{
 			var b = lstNames.SelectedItem as FilePdf;
@@ -67,9 +62,40 @@ namespace compiLiasse_Desktop
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
 			Program.StartingMethode();
-			List<FilePdf> listFilesFromJson_Wpf = GetFilesFromJson(Utilities.parametersPathFile);
-			lstNames.ItemsSource = listFilesFromJson_Wpf;
+			List<FilePdf> ListFilesFromJson_Wpf = GetFilesFromJson(Utilities.parametersPathFile);
+			ObsCollectionFilesFromJson_Wpf = new ObservableCollection<FilePdf>(ListFilesFromJson_Wpf);
+			lstNames.ItemsSource = ObsCollectionFilesFromJson_Wpf;
 			//lstNames.DataContext = listFilesFromJson_Wpf;
+
+			CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lstNames.ItemsSource);
+			view.SortDescriptions.Add(new SortDescription("Id", ListSortDirection.Descending));
+			//PropertyGroupDescription groupDescription = new PropertyGroupDescription("FilePath");
+			//view.GroupDescriptions.Add(groupDescription);
+		}
+
+		private void btnAddFile_Click(object sender, RoutedEventArgs e)
+		{
+			ObsCollectionFilesFromJson_Wpf.Add(new FilePdf(6, @"C:\Test", "newFile.pdf"));
+		}
+
+		private void btnChangeFile_Click(object sender, RoutedEventArgs e)
+		{
+			if (lstNames.SelectedItem != null)
+			{
+				(lstNames.SelectedItem as FilePdf).Id = 7;
+				(lstNames.SelectedItem as FilePdf).FilePath = @"D:\Modif";
+				(lstNames.SelectedItem as FilePdf).FileName = "FileModif.pdf";
+			}
+		}
+
+		private void btnDeleteFile_Click(object sender, RoutedEventArgs e)
+		{
+			if (lstNames.SelectedItem != null)
+			{
+				ObsCollectionFilesFromJson_Wpf.Remove(lstNames.SelectedItem as FilePdf);
+				// cfr => Répondre aux changement de la liste source de données
+				// https://wpf-tutorial.com/fr/38/data-binding/repondre-aux-changements/
+			}
 		}
 	}
 }
