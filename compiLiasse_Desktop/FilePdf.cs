@@ -1,27 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace compiLiasse_Desktop
 {
-	public class FilePdf : IEquatable<FilePdf>, IComparable
+	public class FilePdf : IEquatable<FilePdf>, IComparable, INotifyPropertyChanged
 	{
 		#region Paramètres et Constructeurs
 
-		int id;
-		string filePath;
+		bool fileExist;
 		string fileName;
+		string filePath;
+		int id;
 		string searchKey;
 		string tableContentsName;
-		bool fileExist;
-
-		public int Id { get => id; set => id = value; }
-		public string FilePath { get => filePath; set => filePath = value; }
-		public string FileName { get => fileName; set => fileName = value; }
-		public string SearchKey { get => searchKey; set => searchKey = value; }
-		public string TableContentsName { get => tableContentsName; set => tableContentsName = value; }
-		public bool FileExist { get => fileExist; set => fileExist = value; }
-
 		public FilePdf(int id, string filePath, string fileName, string searchKey = null, string tableContentsName = null, bool fileExist = false)
 		{
 			Id = id;
@@ -30,6 +23,111 @@ namespace compiLiasse_Desktop
 			SearchKey = searchKey;
 			TableContentsName = tableContentsName;
 			FileExist = fileExist;
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		public bool FileExist
+		{
+			get { return fileExist; }
+			set
+			{
+				if (fileExist != value)
+				{
+					this.fileExist = value;
+					this.NotifyPropertyChanged("FileExist");
+				}
+			}
+		}
+
+		public string FileName
+		{
+			get { return fileName; }
+			set
+			{
+				if (fileName != value)
+				{
+					this.fileName = value;
+					this.NotifyPropertyChanged("FileName");
+				}
+			}
+		}
+
+		public string FilePath
+		{
+			get { return filePath; }
+			set
+			{
+				if (filePath != value)
+				{
+					this.filePath = value;
+					this.NotifyPropertyChanged("FilePath");
+				}
+			}
+		}
+
+		public int Id
+		{
+			get { return id; }
+			set
+			{
+				if (id != value)
+				{
+					this.id = value;
+					this.NotifyPropertyChanged("Id");
+				}
+			}
+		}
+
+		public string SearchKey
+		{
+			get { return searchKey; }
+			set
+			{
+				if (searchKey != value)
+				{
+					this.searchKey = value;
+					this.NotifyPropertyChanged("SearchKey");
+				}
+			}
+		}
+
+		public string TableContentsName
+		{
+			get { return tableContentsName; }
+			set
+			{
+				if (tableContentsName != value)
+				{
+					this.tableContentsName = value;
+					this.NotifyPropertyChanged("TableContentsName");
+				}
+			}
+		}
+
+		public static bool operator !=(FilePdf left, FilePdf right)
+		{
+			return !(left == right);
+		}
+
+		public static bool operator ==(FilePdf left, FilePdf right)
+		{
+			return EqualityComparer<FilePdf>.Default.Equals(left, right);
+		}
+
+		public int CompareTo(object obj)
+		{
+			if (obj == null)
+			{
+				return 1;
+			}
+
+			if (obj is FilePdf x)
+			{
+				return CompareTo(x);
+			}
+
+			throw new ArgumentException("", nameof(obj));
 		}
 
 		public override bool Equals(object obj)
@@ -55,31 +153,11 @@ namespace compiLiasse_Desktop
 
 		public override string ToString() => $"{Id} - {FilePath}{FileName}";
 
-		public int CompareTo(object obj)
+		public void NotifyPropertyChanged(string propName)
 		{
-			if (obj == null)
-			{
-				return 1;
-			}
-
-			if (obj is FilePdf x)
-			{
-				return CompareTo(x);
-			}
-
-			throw new ArgumentException("", nameof(obj));
+			if (this.PropertyChanged != null)
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
 		}
-
-		public static bool operator ==(FilePdf left, FilePdf right)
-		{
-			return EqualityComparer<FilePdf>.Default.Equals(left, right);
-		}
-
-		public static bool operator !=(FilePdf left, FilePdf right)
-		{
-			return !(left == right);
-		}
-
 		#endregion
 
 		internal static void ShowListOfExistingFiles(List<FilePdf> pListFiles)
@@ -93,6 +171,16 @@ namespace compiLiasse_Desktop
 			}
 		}
 
+		internal static void SortFilesByDescendingId(List<FilePdf> pListFiles)
+		{
+			pListFiles = pListFiles.OrderByDescending(p => p.Id).ToList();
+		}
+
+		internal static void SortFilesById(List<FilePdf> pListFiles)
+		{
+			pListFiles = pListFiles.OrderBy(p => p.Id).ToList();
+		}
+
 		internal void ShowFileExistOrNot()
 		{
 			//string nomFormate = FormaterNom(FileName);
@@ -102,17 +190,6 @@ namespace compiLiasse_Desktop
 			//Console.WriteLine(String.Join(", ", ingredientsFormates));
 			Console.WriteLine();
 		}
-
-		internal static void SortFilesById(List<FilePdf> pListFiles)
-		{
-			pListFiles = pListFiles.OrderBy(p => p.Id).ToList();
-		}
-
-		internal static void SortFilesByDescendingId(List<FilePdf> pListFiles)
-		{
-			pListFiles = pListFiles.OrderByDescending(p => p.Id).ToList();
-		}
-
 		private static string FormaterNom(string pString) => $"{pString[0].ToString().ToUpper()}{pString[1..].ToLower()}";
 
 		// Méthodes Obsolètes
