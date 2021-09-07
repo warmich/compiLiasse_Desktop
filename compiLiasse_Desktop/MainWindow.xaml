@@ -20,7 +20,8 @@
 
 		<!--Contenu de la colonne de gauche-->
 		<Label Grid.Column="0" Content="compiLiasse_desktop"/>
-		<ListView x:Name="lstNames" Margin="0,0,0,0" Grid.Row="1" MouseDoubleClick="lstNames_MouseDoubleClick">
+		<ListView x:Name="lstNames" Margin="0,0,0,0" Grid.Row="1" MouseDoubleClick="lstNames_MouseDoubleClick" >
+				  <!--DataContext="{Binding FilePdf}" ItemsSource="{Binding}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}"-->
 			<ListView.View>
 				<GridView>
 					<GridViewColumn Header="Id" Width="20" DisplayMemberBinding="{Binding Id}" />
