@@ -14,14 +14,19 @@ namespace compiLiasse_Desktop
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
-	public partial class MainWindow : Window
+	public partial class MainWindow : Window, INotifyPropertyChanged
 	{
 		public ObservableCollection<FilePdf> ObsCollectionFilesFromJson_Wpf { get; set; }
 
 		public MainWindow()
 		{
 			InitializeComponent();
+			DataContext = this;
 		}
+
+		public FilePdf SelectedPDF { get; set; }
+
+		public event PropertyChangedEventHandler PropertyChanged;
 
 		internal static List<FilePdf> GetFilesFromJson(string pFileName)
 		{
@@ -64,11 +69,12 @@ namespace compiLiasse_Desktop
 			Program.StartingMethode();
 			List<FilePdf> ListFilesFromJson_Wpf = GetFilesFromJson(Utilities.parametersPathFile);
 			ObsCollectionFilesFromJson_Wpf = new ObservableCollection<FilePdf>(ListFilesFromJson_Wpf);
-			lstNames.ItemsSource = ObsCollectionFilesFromJson_Wpf;
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ObsCollectionFilesFromJson_Wpf"));
+			//lstNames.ItemsSource = ObsCollectionFilesFromJson_Wpf;
 			//lstNames.DataContext = listFilesFromJson_Wpf;
 
-			CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lstNames.ItemsSource);
-			view.SortDescriptions.Add(new SortDescription("Id", ListSortDirection.Descending));
+			//CollectionView view = CollectionViewSource.GetDefaultView(lstNames.ItemsSource) as CollectionView;
+			//view.SortDescriptions.Add(new SortDescription("Id", ListSortDirection.Descending));
 			//PropertyGroupDescription groupDescription = new PropertyGroupDescription("FilePath");
 			//view.GroupDescriptions.Add(groupDescription);
 		}
@@ -80,12 +86,19 @@ namespace compiLiasse_Desktop
 
 		private void btnChangeFile_Click(object sender, RoutedEventArgs e)
 		{
-			if (lstNames.SelectedItem != null)
+			var copy = SelectedPDF;
+			SelectedPDF = null;
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SelectedPDF"));
+			//lstNames.DataContext = ObsCollectionFilesFromJson_Wpf;
+			if (copy != null)
 			{
-				(lstNames.SelectedItem as FilePdf).Id = 7;
-				(lstNames.SelectedItem as FilePdf).FilePath = @"D:\Modif";
-				(lstNames.SelectedItem as FilePdf).FileName = "FileModif.pdf";
+				//(lstNames.SelectedItem as FilePdf).Id = 3;
+				copy.FilePath = @"D:\Modif";
+				copy.FileName = "FileModif.pdf";
 			}
+
+			
+			//lstNames.
 		}
 
 		private void btnDeleteFile_Click(object sender, RoutedEventArgs e)
