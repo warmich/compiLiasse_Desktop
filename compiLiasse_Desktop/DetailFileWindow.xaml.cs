@@ -7,9 +7,11 @@ namespace compiLiasse_Desktop
 	/// </summary>
 	public partial class DetailFileWindow : Window
 	{
-		public DetailFileWindow()
+		public DetailFileWindow(FilePdf filePdf)
 		{
 			InitializeComponent();
+			DataContext = this;
+			this.FilePdfTxtBox.Text = filePdf.FileName;
 		}
 	}
 }
