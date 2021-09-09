@@ -24,7 +24,7 @@ namespace compiLiasse_Desktop
 		public ObservableCollection<FilePdf> ObsCollectionFilesFromJson_Wpf { get; set; }
 		public FilePdf SelectedPDF { get; set; }
 
-		// Get file faire une injection de dépendance sur le projet ID de Khun
+		// Get file faire une injection de dépendance => le projet ID de Khun
 		internal static List<FilePdf> GetFilesFromJson(string pFileName)
 		{
 			string listFilesJson;
@@ -69,11 +69,18 @@ namespace compiLiasse_Desktop
 				//copy.FileName = "FileModif.pdf";
 				DetailFileWindow detailFileWindow = new(copy);
 				detailFileWindow.Owner = this;
-				detailFileWindow.ShowDialog();
+
+				bool? result = detailFileWindow.ShowDialog();
+
+				if (result == true)
+				{
+					SelectedPDF = copy; //modif;
+				}
+				else
+				{
+					MessageBox.Show("Rien n'a changé");
+				}
 			}
-
-
-			//lstNames.
 		}
 
 		private void btnDeleteFile_Click(object sender, RoutedEventArgs e)
@@ -91,7 +98,6 @@ namespace compiLiasse_Desktop
 			var b = lstNames.SelectedItem as FilePdf;
 			DetailFileWindow detailFileWindow = new(b);
 			detailFileWindow.FilePdfTxtBox.Text = b.FileName;
-			//https://docs.microsoft.com/fr-fr/dotnet/desktop/wpf/windows/how-to-open-window-dialog-box?view=netdesktop-5.0
 			detailFileWindow.Owner = this;
 			detailFileWindow.ShowDialog();
 		}
