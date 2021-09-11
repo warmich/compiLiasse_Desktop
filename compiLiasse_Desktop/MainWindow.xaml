@@ -4,7 +4,10 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		mc:Ignorable="d"
-		Title="compiLiasse_desktop" Height="450" Width="800" Loaded="Window_Loaded">
+		Title="compiLiasse_desktop" Height="450" Width="800" 
+		Loaded="Window_Loaded"
+		WindowStyle="None"
+		ResizeMode="NoResize">
 	
 	<!--Mise en page => Grid-->
 	<Grid x:Name="GrdPrincipal" Margin="10">
@@ -19,11 +22,20 @@
 		</Grid.ColumnDefinitions>
 
 		<!--Contenu de la colonne de gauche-->
-		<Label Grid.Column="0" Content="compiLiasse_desktop"/>
+		
+		<StackPanel Margin="0" Grid.Column="0" Grid.Row="0">
+			<ComboBox x:Name="cboxConfigs" SelectionChanged="cboxConfigs_SelectionChanged" />
+
+			<WrapPanel Margin="15" HorizontalAlignment="Center">
+				<Button Name="btnPrevious" Click="btnPrevious_Click" Width="55">Previous</Button>
+				<Button Name="btnNext" Click="btnNext_Click" Margin="5,0" Width="55">Next</Button>
+				<Button Name="btnBlue" Click="btnBlue_Click" Width="55">Blue</Button>
+			</WrapPanel>
+		</StackPanel>
+		
 		<ListView x:Name="lstNames" 
 				  Margin="0,0,0,0" 
 				  Grid.Row="1" 
-				  MouseDoubleClick="lstNames_MouseDoubleClick" 
 				  ItemsSource="{Binding ObsCollectionFilesFromJson_Wpf}" 
 				  SelectedItem="{Binding SelectedPDF}" >
 			<ListView.View>
@@ -42,11 +54,14 @@
 		</ListView>
 		
 		<!--Contenu de la colonne de droite-->
+		<Label Grid.Column="1" Content="compiLiasse_desktop"/>
+		
 		<StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
-			<Button x:Name="btnAddFile" Click="btnAddFile_Click" Content="Ajouter"/>
+			<Button x:Name="btnAddFile" Margin="0,5,0,0" Click="btnAddFile_Click" Content="Ajouter"/>
 			<Button x:Name="btnChangeFile" Click="btnChangeFile_Click" Margin="0,5" Content="Modifier"/>
 			<Button x:Name="btnDeleteFile" Click="btnDeleteFile_Click" Content="Supprimer"/>
+			<Button x:Name="btnSaveList" Content="Sauver la Liste" Margin="0,5,0,0" Click="btnSaveList_Click"/>
+			<Button x:Name="btnSpratchList" Content="Remplacer la Liste" Margin="0,5,0,0" Click="btnSpratchList_Click"/>
 		</StackPanel>
-		<Canvas/>
 	</Grid>
 </Window>

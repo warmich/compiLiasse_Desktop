@@ -26,7 +26,6 @@ namespace compiLiasse_Desktop
 		{
 			filePdf.FileName = FilePdfTxtBox.Text;
 			DialogResult = true;
-			// this.Close();
 		}
 	}
 }

@@ -1,21 +1,28 @@
-﻿using Newtonsoft.Json;
-
-using System;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+
+using Microsoft.Win32;
+
+using Newtonsoft.Json;
 
 namespace compiLiasse_Desktop
 {
 	public static class Utilities
 	{
 		public static string pathBase = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-		public const string usersListsDir = "compiLiasse";
-		public const string parametersDir = "Bin";
-		public const string parametersFileName = "Parameters.json";
-		public static string usersPath = Path.Combine(pathBase, usersListsDir);
-		public static string parametersPath = Path.Combine(usersPath, parametersDir);
-		public static string parametersPathFile = Path.Combine(parametersPath, parametersFileName);
-		public const string urlName = "https://codeavecjonathan.com/res/pizzas2.json";
+		public const string USERS_LIST_DIR = "compiLiasse";
+		public const string APPLICATION_DIR = "Bin";
+		public const string CONFIG_DIR = "Config";
+		public const string PARAMETERS_DIR = "Parameters";
+		public const string PARAMETERS_FILE_NAME = "Parameters.json";
+		public static string usersPath = Path.Combine(pathBase, USERS_LIST_DIR);
+		public static string applicationPath = Path.Combine(usersPath, APPLICATION_DIR);
+		public static string configPath = Path.Combine(applicationPath, CONFIG_DIR);
+		public static string parametersPath = Path.Combine(applicationPath, PARAMETERS_DIR);
+		public static string parametersPathFile = Path.Combine(parametersPath, PARAMETERS_FILE_NAME);
+		public const string URL_NAME = "https://codeavecjonathan.com/res/pizzas2.json";
 
 		internal static void StartTests()
 		{
@@ -83,5 +90,20 @@ namespace compiLiasse_Desktop
 			}
 		}
 
+		internal static void SaveListFilePdf(IEnumerable pListFilePdf)
+		{
+			SaveFileDialog saveFileDialog = new SaveFileDialog();
+			saveFileDialog.Filter = "Liste Config (*.config)|*.config";
+			saveFileDialog.InitialDirectory = configPath;
+			if (saveFileDialog.ShowDialog() == true)
+				File.WriteAllText(saveFileDialog.FileName, JsonConvert.SerializeObject(pListFilePdf));
+		}
+
+		internal static void SpratchiLaListe(IEnumerable pListFilePdf, string fileName)
+		{
+			string NameWithExtension = $"{fileName}.config";
+			string pathFileComplete = Path.Combine(configPath, NameWithExtension);
+			File.WriteAllText(pathFileComplete, JsonConvert.SerializeObject(pListFilePdf));
+		}
 	}
 }
