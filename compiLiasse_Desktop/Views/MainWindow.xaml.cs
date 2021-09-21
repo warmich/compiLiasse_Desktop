@@ -126,6 +126,7 @@ namespace compiLiasse_Desktop.Views
 		private void Cbox_Initialisation(int pId = 1)
 		{
 			List<string> changerCetteDaube = new List<string>();
+			// avant de faire des add vérifier et créer les dossiers si ils n'existent pas !
 			changerCetteDaube.Add(Utilities.parametersPathFile);
 			changerCetteDaube.Add(Utilities.configPath);
 			List<FileAppConfig> filesConfig = FilesInDirectory.ProcessRecursiveFile(changerCetteDaube);
