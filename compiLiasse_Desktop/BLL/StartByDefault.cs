@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
-using static compiLiasse_Desktop.Utilities;
+using static compiLiasse_Desktop.BLL.Utilities;
 
-namespace compiLiasse_Desktop
+namespace compiLiasse_Desktop.BLL
 {
-	public static class Program
+	public static class StartByDefault
 	{
 		private static List<FilePdf> listeFilesFromJson_Con;
 

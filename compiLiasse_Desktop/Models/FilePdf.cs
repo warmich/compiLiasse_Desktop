@@ -7,7 +7,7 @@ namespace compiLiasse_Desktop
 {
 	public class FilePdf : IEquatable<FilePdf>, IComparable, INotifyPropertyChanged
 	{
-		#region Paramètres et Constructeurs
+		#region Propriétés
 
 		bool fileExist;
 		string fileName;
@@ -15,15 +15,6 @@ namespace compiLiasse_Desktop
 		int id;
 		string searchKey;
 		string tableContentsName;
-		public FilePdf(int id, string filePath, string fileName, string searchKey = null, string tableContentsName = null, bool fileExist = false)
-		{
-			Id = id;
-			FilePath = (filePath != null) ? filePath : throw new ArgumentNullException(nameof(filePath));
-			FileName = fileName ?? throw new ArgumentNullException(nameof(fileName));
-			SearchKey = searchKey;
-			TableContentsName = tableContentsName;
-			FileExist = fileExist;
-		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -105,6 +96,26 @@ namespace compiLiasse_Desktop
 			}
 		}
 
+		#endregion
+
+		#region Constructeurs
+
+		public FilePdf()
+		{
+		}
+
+		public FilePdf(int id, string filePath, string fileName, string searchKey = null, string tableContentsName = null, bool fileExist = false)
+		{
+			Id = id;
+			FilePath = (filePath != null) ? filePath : throw new ArgumentNullException(nameof(filePath));
+			FileName = fileName ?? throw new ArgumentNullException(nameof(fileName));
+			SearchKey = searchKey;
+			TableContentsName = tableContentsName;
+			FileExist = fileExist;
+		}
+
+		public override string ToString() => $"{Id} - {FilePath}{FileName}";
+
 		public static bool operator !=(FilePdf left, FilePdf right)
 		{
 			return !(left == right);
@@ -151,14 +162,15 @@ namespace compiLiasse_Desktop
 			return HashCode.Combine(Id, FilePath, FileName, SearchKey, TableContentsName, FileExist);
 		}
 
-		public override string ToString() => $"{Id} - {FilePath}{FileName}";
-
 		public void NotifyPropertyChanged(string propName)
 		{
 			if (this.PropertyChanged != null)
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
 		}
+
 		#endregion
+
+		#region Méthodes
 
 		internal static void ShowListOfExistingFiles(List<FilePdf> pListFiles)
 		{
@@ -192,7 +204,10 @@ namespace compiLiasse_Desktop
 		}
 		private static string FormaterNom(string pString) => $"{pString[0].ToString().ToUpper()}{pString[1..].ToLower()}";
 
-		// Méthodes Obsolètes
+		#endregion
+
+		#region Méthodes Obsolètes
+
 		//internal bool ContientCetIngredient(string pIngredient)
 		//{
 		//	return Ingredients.Where(ingredient => ingredient.Contains(pIngredient, StringComparison.OrdinalIgnoreCase)).ToList().Count() > 0;
@@ -218,9 +233,12 @@ namespace compiLiasse_Desktop
 		//	Console.WriteLine("La Pizza la plus cher est la :");
 		//	laPlusCher.Afficher();
 		//}
+
+		#endregion
 	}
 
-	//Class dérivée
+	#region Class dérivée
+
 	//internal class PizzaPersonnalisee : Pizza
 	//{
 	//	static int numeroPizzaPerso = 0;
@@ -252,4 +270,6 @@ namespace compiLiasse_Desktop
 	//		}
 	//	}
 	//}
+
+	#endregion
 }

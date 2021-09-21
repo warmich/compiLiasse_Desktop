@@ -1,18 +1,18 @@
-﻿using MigraDoc.DocumentObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+
+using MigraDoc.DocumentObjectModel;
 using MigraDoc.Rendering;
 
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using PdfSharp.Pdf.IO;
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
+using static compiLiasse_Desktop.BLL.Utilities;
 
-using static compiLiasse_Desktop.Utilities;
-
-namespace compiLiasse_Desktop
+namespace compiLiasse_Desktop.BLL
 {
 	class PdfCore
 	{

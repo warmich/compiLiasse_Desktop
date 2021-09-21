@@ -1,0 +1,41 @@
+﻿<Window x:Name="UpdateFileWindow1" x:Class="compiLiasse_Desktop.Views.UpdateFileWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:compiLiasse_Desktop"
+        mc:Ignorable="d"
+        Title="UpdateFileWindow" Height="Auto" Width="Auto"
+		WindowStartupLocation="CenterOwner"
+		SizeToContent="WidthAndHeight">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="Auto"/>
+		</Grid.ColumnDefinitions>
+		<TextBlock Text="Modifier un fichier" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10" Height="20" Width="Auto"/>
+		<TextBlock Text="Id" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Margin="10" Height="20" Width="Auto"/>
+		<TextBox x:Name="TxtBox_Id" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="10" Height="20" Width="160"/>
+		<TextBlock Text="filePath" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Margin="10" Height="20" Width="Auto"/>
+		<TextBox x:Name="TxtBox_filePath" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="10" Height="20" Width="160"/>
+		<TextBlock Text="fileName" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Left" Margin="10" Height="20" Width="Auto"/>
+		<TextBox x:Name="TxtBox_fileName" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Margin="10" Height="20" Width="160"/>
+		<TextBlock Text="searchKey" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Left" Margin="10" Height="20" Width="Auto"/>
+		<TextBox x:Name="TxtBox_searchKey" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Margin="10" Height="20" Width="160"/>
+		<TextBlock Text="tableContentsName" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Left" Margin="10" Height="20" Width="Auto"/>
+		<TextBox x:Name="TxtBox_tableContentsName" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" Margin="10" Height="20" Width="160"/>
+		<WrapPanel Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+			<Button x:Name="btnFileModifOK" Content="Modifier" Margin="10" Height="20" Width="60" IsDefault="True" Click="btnFileModifOK_Click"/>
+			<Button x:Name="btnFileModifCancel" Content="Annuler" Margin="10" Height="20" Width="60" IsCancel="True" Click="btnFileModifCancel_Click"/>
+		</WrapPanel>
+	</Grid>
+</Window>

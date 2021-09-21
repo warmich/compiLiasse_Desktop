@@ -7,7 +7,7 @@ using Microsoft.Win32;
 
 using Newtonsoft.Json;
 
-namespace compiLiasse_Desktop
+namespace compiLiasse_Desktop.BLL
 {
 	public static class Utilities
 	{

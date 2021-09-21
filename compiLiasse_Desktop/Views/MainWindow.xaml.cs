@@ -7,15 +7,20 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
+using compiLiasse_Desktop.BLL;
+using compiLiasse_Desktop.ViewModel;
+
 using Newtonsoft.Json;
 
-namespace compiLiasse_Desktop
+namespace compiLiasse_Desktop.Views
 {
 	public partial class MainWindow : Window, INotifyPropertyChanged
 	{
 		public MainWindow()
 		{
 			InitializeComponent();
+			MainWindowVM mainWindowBusiness = new MainWindowVM();
+			DataContext = mainWindowBusiness;
 			DataContext = this;
 		}
 
@@ -54,22 +59,33 @@ namespace compiLiasse_Desktop
 			return listFilesPdf;
 		}
 
-		private void btnAddFile_Click(object sender, RoutedEventArgs e)
+		private void BtnCreateFile_Click(object sender, RoutedEventArgs e)
 		{
-			ObsCollectionFilesFromJson_Wpf.Add(new FilePdf(6, @"C:\Test", "newFile.pdf"));
+			FilePdf filePdfAdded = new();
+			CreateFileWindow createFileWindow = new CreateFileWindow(filePdfAdded);
+			createFileWindow.Owner = this;
+			bool? result = createFileWindow.ShowDialog();
+			if (result == true)
+			{
+				ObsCollectionFilesFromJson_Wpf.Add(filePdfAdded);
+			}
+			else
+			{
+				//MessageBox.Show("Rien n'a changé");
+			}
 		}
 
-		private void btnChangeFile_Click(object sender, RoutedEventArgs e)
+		private void BtnChangeFile_Click(object sender, RoutedEventArgs e)
 		{
 			var copy = SelectedPDF;
 			SelectedPDF = null;
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SelectedPDF"));
 			if (copy != null)
 			{
-				DetailFileWindow detailFileWindow = new(copy);
-				detailFileWindow.Owner = this;
+				UpdateFileWindow updateFileWindow = new(copy);
+				updateFileWindow.Owner = this;
 
-				bool? result = detailFileWindow.ShowDialog();
+				bool? result = updateFileWindow.ShowDialog();
 
 				if (result == true)
 				{
@@ -82,7 +98,7 @@ namespace compiLiasse_Desktop
 			}
 		}
 
-		private void btnDeleteFile_Click(object sender, RoutedEventArgs e)
+		private void BtnDeleteFile_Click(object sender, RoutedEventArgs e)
 		{
 			if (lstNames.SelectedItem != null)
 			{
@@ -92,7 +108,7 @@ namespace compiLiasse_Desktop
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			Program.StartingMethode();
+			StartByDefault.StartingMethode();
 			Cbox_Initialisation();
 			LstNames_Initialisation(Utilities.parametersPathFile);
 		}
@@ -107,52 +123,57 @@ namespace compiLiasse_Desktop
 			view.SortDescriptions.Add(new SortDescription("Id", ListSortDirection.Descending));
 		}
 
-		private void Cbox_Initialisation()
+		private void Cbox_Initialisation(int pId = 1)
 		{
 			List<string> changerCetteDaube = new List<string>();
 			changerCetteDaube.Add(Utilities.parametersPathFile);
 			changerCetteDaube.Add(Utilities.configPath);
-			List<FileConfig> filesConfig = FilesInDirectory.ProcessRecursiveFile(changerCetteDaube);
+			List<FileAppConfig> filesConfig = FilesInDirectory.ProcessRecursiveFile(changerCetteDaube);
 			cboxConfigs.ItemsSource = filesConfig;
 			cboxConfigs.DisplayMemberPath = "Name";
 			cboxConfigs.SelectedValuePath = "Id";
-			cboxConfigs.SelectedValue = "1";
+			cboxConfigs.SelectedValue = pId;
 		}
 
-		private void btnSaveList_Click(object sender, RoutedEventArgs e)
+		private void BtnSaveList_Click(object sender, RoutedEventArgs e)
 		{
 			Utilities.SaveListFilePdf(ObsCollectionFilesFromJson_Wpf);
 			Cbox_Initialisation();
 		}
 
-		private void btnPrevious_Click(object sender, RoutedEventArgs e)
+		private void BtnPrevious_Click(object sender, RoutedEventArgs e)
 		{
 			if (cboxConfigs.SelectedIndex > 0)
 				cboxConfigs.SelectedIndex = cboxConfigs.SelectedIndex - 1;
 		}
 
-		private void btnNext_Click(object sender, RoutedEventArgs e)
+		private void BtnNext_Click(object sender, RoutedEventArgs e)
 		{
 			if (cboxConfigs.SelectedIndex < cboxConfigs.Items.Count - 1)
 				cboxConfigs.SelectedIndex = cboxConfigs.SelectedIndex + 1;
 		}
 
-		private void btnBlue_Click(object sender, RoutedEventArgs e)
+		private void BtnBlue_Click(object sender, RoutedEventArgs e)
 		{
-			FileConfig pathFileConfig = cboxConfigs.SelectedItem as FileConfig;
+			FileAppConfig pathFileConfig = cboxConfigs.SelectedItem as FileAppConfig;
 			LstNames_Initialisation(pathFileConfig.FilePathName);
 		}
 
-		private void cboxConfigs_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		private void CboxConfigs_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 
 		}
 
-		private void btnSpratchList_Click(object sender, RoutedEventArgs e)
+		private void BtnSpratchList_Click(object sender, RoutedEventArgs e)
 		{
-			FileConfig pathFileConfig = cboxConfigs.SelectedItem as FileConfig;
+			FileAppConfig pathFileConfig = cboxConfigs.SelectedItem as FileAppConfig;
 			Utilities.SpratchiLaListe(ObsCollectionFilesFromJson_Wpf, pathFileConfig.Name);
 			Cbox_Initialisation();
+		}
+
+		private void Window_Closed(object sender, EventArgs e)
+		{
+
 		}
 	}
 }

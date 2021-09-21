@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace compiLiasse_Desktop
+namespace compiLiasse_Desktop.BLL
 {
 	// For Directory.GetFiles and Directory.GetDirectories
 	// For File.Exists, Directory.Exists
@@ -12,11 +12,11 @@ namespace compiLiasse_Desktop
 
 	public static class FilesInDirectory
 	{
-		public static List<FileConfig> ListFilesCongigCatched { get; set; }
+		public static List<FileAppConfig> ListFilesCongigCatched { get; set; }
 
-		public static List<FileConfig> ProcessRecursiveFile(List<string> pListFiles)
+		public static List<FileAppConfig> ProcessRecursiveFile(List<string> pListFiles)
 		{
-			ListFilesCongigCatched = new List<FileConfig>();
+			ListFilesCongigCatched = new List<FileAppConfig>();
 			foreach (string path in pListFiles)
 			{
 				if (File.Exists(path))
@@ -55,7 +55,7 @@ namespace compiLiasse_Desktop
 		// Insert logic for processing found files here.
 		public static void ProcessFile(string path)
 		{
-			ListFilesCongigCatched.Add(new FileConfig(path)); // Path.GetFileNameWithoutExtension(path)
+			ListFilesCongigCatched.Add(new FileAppConfig(path)); // Path.GetFileNameWithoutExtension(path)
 		}
 	}
 }
