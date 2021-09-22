@@ -162,7 +162,7 @@ namespace compiLiasse_Desktop.Views
 
 		private void CboxConfigs_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			int a = Convert.
+			
 		}
 
 		private void BtnSpratchList_Click(object sender, RoutedEventArgs e)
